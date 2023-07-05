@@ -1,6 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { SearchOptions } from "@/components/atoms/SearchOptions";
-import { Content } from "@/components/molecules/Content";
 // import { Searchbar } from "@/components/molecules/Searchbar";
 import { css } from "@emotion/react";
 import { Loader, Skeleton } from "@mantine/core";
@@ -10,16 +8,6 @@ import { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import React from "react";
-
-const Group = dynamic(() => import("@mantine/core").then((mod) => mod.Group), {
-  ssr: false,
-  loading: () => <Loader variant="dots" />,
-});
-
-const SegmentedControl = dynamic(
-  () => import("@mantine/core").then((mod) => mod.SegmentedControl),
-  { ssr: false, loading: () => <Loader variant="dots" /> }
-);
 
 const Searchbar = dynamic(
   () => import("@/components/molecules/Searchbar").then((mod) => mod.Searchbar),
@@ -31,8 +19,7 @@ type SearchData = {
   document: string;
   similarity_score: number;
 };
-
-const Index: NextPage = () => {
+const AiSearch: NextPage = () => {
   const [search, setSearch] = React.useState<string>("");
   const [enabled, setEnabled] = React.useState<boolean>(false);
 
@@ -93,13 +80,6 @@ const Index: NextPage = () => {
         setter={setEnabled}
       />
 
-      <Group
-        position="center"
-        style={{ marginTop: "10px", marginBottom: "10px" }}
-      >
-        <SegmentedControl fullWidth data={SearchOptions} />
-      </Group>
-
       {isFetching && (
         <Skeleton height={100} width="100%" visible style={{ margin: 10 }} />
       )}
@@ -123,10 +103,8 @@ const Index: NextPage = () => {
           ))}
         </div>
       )}
-
-      <Content />
     </div>
   );
 };
 
-export default Index;
+export default AiSearch;
