@@ -143,19 +143,19 @@ export const NavbarAtom = ({
           loading="lazy"
         />
         <Group className={classes.header} position="apart">
-          <Code sx={{ fontWeight: 700 }}>v3.1.2</Code>
+          <Code sx={{ fontWeight: 700 }}>v3.1.3</Code>
           <ThemeToggle />
         </Group>
         {links}
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <Link href="#" className={classes.link}>
+        <Link href="#" className={classes.link} prefetch={false}>
           <CgFileDocument className={classes.linkIcon} stroke="1.5" />
           <span>Dokumentasi</span>
         </Link>
 
-        <Link href="#" className={classes.link}>
+        <Link href="#" className={classes.link} prefetch={false}>
           <LiaInfoCircleSolid className={classes.linkIcon} stroke="1.5" />
           <span>Info</span>
         </Link>

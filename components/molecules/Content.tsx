@@ -1,6 +1,7 @@
 import { ActionIcon, Text, createStyles, rem } from "@mantine/core";
 import { IoIosMore } from "react-icons/io";
 import { ToolbarMenu } from "../atoms/ToolbarMenu";
+import styled from "@emotion/styled";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -32,18 +33,24 @@ const useStyles = createStyles((theme) => ({
       justifyContent: "flex-start",
     },
   },
-  contents: {
-    display: "flex",
-    flexDirection: "column",
-    width: "100%",
-    gap: theme.spacing.md,
-  },
-  arabicContent: {
-    fontFamily: "Quran-Madina",
-    src: `url(/fonts/quran-font.otf) format(opentype)`,
-    fontSize: rem(32),
-  },
 }));
+
+const ArabicContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: ${({ theme }) => theme.spacing.md};
+
+  @font-face {
+    font-family: "Quran";
+    src: url(fonts/quran-font.otf) format(opentype);
+  }
+
+  .quran-text {
+    font-family: "Quran";
+    font-size: ${rem(32)};
+  }
+`;
 
 export const Content = () => {
   const { classes, cx } = useStyles();
@@ -54,13 +61,18 @@ export const Content = () => {
           <Text size="md">No: 1</Text>
           <Text size="md">2:282</Text>
           <ToolbarMenu>
-            <ActionIcon variant="filled" radius="xl" size="md">
+            <ActionIcon
+              variant="filled"
+              radius="xl"
+              size="md"
+              aria-label="Toolbar Menu"
+            >
               <IoIosMore size="1.1rem" stroke="1.5" />
             </ActionIcon>
           </ToolbarMenu>
         </div>
-        <div className={classes.contents}>
-          <Text dir="rtl" className={classes.arabicContent} align="justify">
+        <ArabicContent>
+          <Text dir="rtl" className="quran-text" align="justify">
             ۞ وَإِن كُنتُمْ عَلَىٰ سَفَرٍ وَلَمْ تَجِدُوا۟ كَاتِبًا فَرِهَـٰنٌ
             مَّقْبُوضَةٌ ۖ فَإِنْ أَمِنَ بَعْضُكُم بَعْضًا فَلْيُؤَدِّ ٱلَّذِى
             ٱؤْتُمِنَ أَمَـٰنَتَهُۥ وَلْيَتَّقِ ٱللَّهَ رَبَّهُۥ ۗ وَلَا
@@ -76,7 +88,7 @@ export const Content = () => {
             kesaksian, karena barangsiapa menyembunyikannya, sungguh, hatinya
             kotor (berdosa). Allah Maha Mengetahui apa yang kamu kerjakan.
           </Text>
-        </div>
+        </ArabicContent>
       </div>
     </div>
   );

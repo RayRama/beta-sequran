@@ -31,6 +31,7 @@ export function Searchbar(
           onClick={() => {
             props.setter((o) => !o);
           }}
+          aria-label="Search"
         >
           <BsArrowRight size="1.1rem" stroke="1.5" />
         </ActionIcon>

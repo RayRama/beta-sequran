@@ -8,10 +8,10 @@ import {
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AppProps } from "next/app";
-import React from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { AppProps } from "next/app";
 import dynamic from "next/dynamic";
+import React from "react";
 
 const AppShell = dynamic(
   () => import("@/components/molecules/AppShell").then((mod) => mod.AppShell),

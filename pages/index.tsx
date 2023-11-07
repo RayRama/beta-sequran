@@ -79,7 +79,7 @@ const Index: NextPage = () => {
         css={css`
           width: 40%;
           @media (max-width: 768px) {
-            width: 80%;
+            width: 90%;
           }
         `}
         defaultValue={search}
@@ -95,7 +95,10 @@ const Index: NextPage = () => {
 
       <Group
         position="center"
-        style={{ marginTop: "10px", marginBottom: "10px" }}
+        style={{
+          marginTop: "10px",
+          marginBottom: "10px",
+        }}
       >
         <SegmentedControl fullWidth data={SearchOptions} />
       </Group>
