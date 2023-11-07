@@ -35,11 +35,11 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+// gap: ${({ theme }) => theme.spacing.md};
 const ArabicContent = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  // gap: ${({ theme }) => theme.spacing.md};
   gap: 1rem;
 
   @font-face {
