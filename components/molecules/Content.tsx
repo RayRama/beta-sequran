@@ -39,7 +39,8 @@ const ArabicContent = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: ${({ theme }) => theme.spacing.md};
+  // gap: ${({ theme }) => theme.spacing.md};
+  gap: 1rem;
 
   @font-face {
     font-family: "Quran";
@@ -48,7 +49,7 @@ const ArabicContent = styled.div`
 
   .quran-text {
     font-family: "Quran";
-    font-size: ${rem(32)};
+    font-size: ${rem(28)};
   }
 `;
 
