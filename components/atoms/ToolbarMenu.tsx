@@ -21,7 +21,7 @@ export const ToolbarMenu = ({ children, index }: ToolbarMenuProps) => {
   const queryClient = useQueryClient();
   let realIndex = index - 1;
 
-  const query: any[] = queryClient.getQueryData(["ai-search"]);
+  const query: any[] = queryClient.getQueryData(["ai-search"]) || [];
 
   const showNotification = (err?: any) => {
     notifications.show({

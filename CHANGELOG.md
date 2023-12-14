@@ -18,7 +18,7 @@ title: Release Notes 📝
 
 ### 🛠️ Bug Fixes
 
-There are no bug fixes in this version.
+- Fix type safety on all components and pages
 
 ## 3.1.3 - (07 November 2023)
 

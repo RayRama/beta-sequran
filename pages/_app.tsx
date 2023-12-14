@@ -2,6 +2,7 @@
 import { RouterTransition } from "@/components/ui/RouterTransition";
 import { css } from "@emotion/react";
 import {
+  ActionIcon,
   ColorScheme,
   ColorSchemeProvider,
   Loader,
@@ -18,11 +19,6 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const AppShell = dynamic(
   () => import("@/components/molecules/AppShell").then((mod) => mod.AppShell),
-  { ssr: false, loading: () => <Loader variant="dots" /> }
-);
-
-const ActionIconCustom = dynamic(
-  () => import("@mantine/core").then((mod) => mod.ActionIcon),
   { ssr: false, loading: () => <Loader variant="dots" /> }
 );
 
@@ -53,7 +49,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           <ReactQueryDevtools />
           <Notifications position="top-center" zIndex={999} />
           <AppShell hiddenNav={hidden}>
-            <ActionIconCustom
+            <ActionIcon
               title="Toggle Navbar"
               onClick={() => setHidden(!hidden)}
               css={css`
@@ -75,7 +71,7 @@ const App = ({ Component, pageProps }: AppProps) => {
               `}
             >
               {hidden === true ? <FaChevronRight /> : <FaChevronLeft />}
-            </ActionIconCustom>
+            </ActionIcon>
             <RouterTransition />
             <Component {...pageProps} />
           </AppShell>

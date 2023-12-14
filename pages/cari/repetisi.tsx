@@ -63,7 +63,7 @@ const Repetisi: NextPage = () => {
     queryKey: ["search", useDebouncedValue(search, 200)] as const, // Menyesuaikan tipe argumen queryKey
     queryFn: () => searchData(search),
     enabled: enabled,
-    cacheTime: 1000 * 60 * 60 * 24,
+    gcTime: 1000 * 60 * 60 * 24,
   });
 
   return (
@@ -130,7 +130,7 @@ const Repetisi: NextPage = () => {
                 defaultValue={limit}
                 min={10}
                 max={30}
-                onChange={(value) => setLimit(value)}
+                onChange={(value) => setLimit(Number(value))}
               />
             </>
           }

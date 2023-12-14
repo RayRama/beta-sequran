@@ -16,7 +16,9 @@ export function SearchBar(
   }
 ) {
   const theme = useMantineTheme();
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const inputRef = React.useRef<HTMLInputElement>(
+    null
+  ) as React.MutableRefObject<HTMLInputElement>;
 
   const notificationError = (message = "Error") => {
     notifications.show({

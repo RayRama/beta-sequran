@@ -10,7 +10,7 @@ interface navbarLinkInterface {
   nestedLink?: {
     link: string;
     label: string;
-    icon?: React.ElementType;
+    icon: React.ElementType;
   }[];
 }
 

@@ -99,7 +99,7 @@ const Index: NextPage = () => {
                 defaultValue={limit}
                 min={10}
                 max={30}
-                onChange={(value) => setLimit(value)}
+                onChange={(value) => setLimit(Number(value))}
               />
             </>
           }

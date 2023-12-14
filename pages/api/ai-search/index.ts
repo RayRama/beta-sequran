@@ -9,7 +9,7 @@ export default async function handler(
 ) {
   // get the query from the request
   const { query, total } = req.query;
-  let results = [];
+  let results: any[] = [];
 
   if (!query) {
     return res.status(400).json({ error: "No query provided" });
