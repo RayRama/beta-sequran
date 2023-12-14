@@ -55,7 +55,21 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export const NavbarLink = ({ items, setOpened }) => {
+interface NavbarLinkProps {
+  items: {
+    link: string;
+    label: string;
+    icon: React.ElementType;
+    nestedLink?: {
+      link: string;
+      label: string;
+      icon: React.ElementType;
+    }[];
+  };
+  setOpened: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const NavbarLink = ({ items, setOpened }: NavbarLinkProps) => {
   const { classes, cx } = useStyles();
   const router = useRouter();
   return (
