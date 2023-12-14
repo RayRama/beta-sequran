@@ -33,7 +33,7 @@ export const SearchOptions = [
         <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
           <FaBookQuran size="1rem" stroke="1.5" style={{ marginRight: 10 }} />
         </MediaQuery>
-        <Box>Tanpa Harakat</Box>
+        <Box>Tnp. Harakat</Box>
       </Center>
     ),
     value: "tanpa-harakat",
@@ -44,7 +44,7 @@ export const SearchOptions = [
         <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
           <GoTypography size="1rem" stroke="1.5" style={{ marginRight: 10 }} />
         </MediaQuery>
-        <Box>Transliterasi</Box>
+        <Box>Latin</Box>
       </Center>
     ),
     value: "transliterasi",

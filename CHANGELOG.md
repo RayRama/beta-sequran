@@ -2,6 +2,24 @@
 title: Release Notes 📝
 ---
 
+## 3.1.4 - (15 December 2023)
+
+### 🆕 New Features
+
+- Add a search filter on search bar
+- Add a 404 page and other error pages
+
+### 💪 Improvements
+
+- Improve App performance
+- Improve API performance
+- Improve UI/UX
+- Add search bar validation
+
+### 🛠️ Bug Fixes
+
+There are no bug fixes in this version.
+
 ## 3.1.3 - (07 November 2023)
 
 ### 🆕 New Features

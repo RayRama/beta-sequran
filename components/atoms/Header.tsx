@@ -1,4 +1,9 @@
-import { Burger, Header as HeaderComponent, MediaQuery } from "@mantine/core";
+import {
+  Burger,
+  Header as HeaderComponent,
+  MediaQuery,
+  Text,
+} from "@mantine/core";
 import { useHeadroom } from "@mantine/hooks";
 import React from "react";
 
@@ -17,20 +22,38 @@ export const Header = ({
       <HeaderComponent
         height={{ base: 50 }}
         p="md"
-        sx={() => ({
-          transform: `translate3d(0, ${headRoom ? 0 : "-3.4rem"}, 0)`,
-          transition: "transform 400ms ease",
+        // sx={() => ({
+        //   transform: `translate3d(0, ${headRoom ? 0 : "-3.4rem"}, 0)`,
+        //   transition: "transform 400ms ease",
+        // })}
+        {...(opened === false && {
+          sx: {
+            transform: `translate3d(0, ${headRoom ? 0 : "-3.4rem"}, 0)`,
+            transition: "transform 400ms ease",
+          },
         })}
       >
         <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
           <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-            <Burger
-              opened={opened}
-              onClick={() => setOpened((o) => !o)}
-              size="sm"
-              color={theme.colors.gray[6]}
-              mr="md"
-            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Burger
+                opened={opened}
+                onClick={() => setOpened((o) => !o)}
+                size="sm"
+                color={theme.colors.gray[6]}
+                mr="md"
+              />
+              <Text size="xl" weight={700}>
+                SEQURAN
+              </Text>
+            </div>
           </MediaQuery>
         </div>
       </HeaderComponent>

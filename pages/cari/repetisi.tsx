@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import { SkeletonCustom } from "@/components/atoms/SkeletonCustom";
+import { SearchOptions } from "@/components/atoms/SearchOptions";
 import { Content } from "@/components/molecules/Content";
 import { SearchFilter } from "@/components/molecules/SearchFilter";
-import { useAISearch } from "@/helper/hooks/useAISearch";
+// import { Content } from "@/components/molecules/Content";
+// import { Searchbar } from "@/components/molecules/Searchbar";
 import { css } from "@emotion/react";
-import { Loader, NumberInput, Text } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { Loader, NumberInput, Skeleton, Text } from "@mantine/core";
+import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
+import { useQuery } from "@tanstack/react-query";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
@@ -16,35 +18,53 @@ const Group = dynamic(() => import("@mantine/core").then((mod) => mod.Group), {
   loading: () => <Loader variant="dots" />,
 });
 
+const SegmentedControl = dynamic(
+  () => import("@mantine/core").then((mod) => mod.SegmentedControl),
+  { ssr: false, loading: () => <Loader variant="dots" /> }
+);
+
 const SearchBar = dynamic(
   () => import("@/components/molecules/SearchBar").then((mod) => mod.SearchBar),
   { ssr: false, loading: () => <Loader variant="dots" /> }
 );
 
-const Index: NextPage = () => {
+type SearchData = {
+  verse_key: string;
+  document: string;
+  similarity_score: number;
+};
+
+const Repetisi: NextPage = () => {
   const [search, setSearch] = React.useState<string>("");
   const [enabled, setEnabled] = React.useState<boolean>(false);
   const [opened, { open, close }] = useDisclosure(false);
   const [limit, setLimit] = React.useState<number>(10);
 
-  const randomPlaceholder = [
-    "Sifat Allah",
-    "Doa nabi musa",
-    "Perintah solat",
-    "Nama-nama Allah",
-    "Ayat tentang puasa",
-  ];
+  const randomPlaceholder = ["Iman", "Takwa", "Allah", "Muhammad", "Puasa"];
 
-  // const searchParams = useSearchParams();
-  // const query = searchParams.get("query");
-  // const total = searchParams.get("total");
+  async function searchData(searchTerm: string): Promise<SearchData> {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/search?query=${searchTerm}&total=${limit}`,
+      {
+        cache: "force-cache",
+      }
+    );
+    const data = await res.json();
+    setEnabled(false);
+    return data.results;
+  }
 
-  const { data, isError, isFetching } = useAISearch(
-    search,
-    limit,
-    enabled,
-    setEnabled
-  );
+  // const debouncedSearchTerm = useDebounce(search, 1000);
+
+  const { data, isError, error, isFetching } = useQuery<
+    SearchData, // Menggunakan tipe SearchData sebagai tipe generic
+    Error
+  >({
+    queryKey: ["search", useDebouncedValue(search, 200)] as const, // Menyesuaikan tipe argumen queryKey
+    queryFn: () => searchData(search),
+    enabled: enabled,
+    cacheTime: 1000 * 60 * 60 * 24,
+  });
 
   return (
     <div
@@ -79,10 +99,17 @@ const Index: NextPage = () => {
             }
           `}
           defaultValue={search}
-          placeholder={randomPlaceholder[Math.floor(Math.random() * 5)]}
+          placeHolder={randomPlaceholder[Math.floor(Math.random() * 5)]}
           onChange={(e) => setSearch(e.currentTarget.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              setEnabled(true);
+            }
+          }}
           setter={setEnabled}
         />
+        {/* <SegmentedControl fullWidth data={SearchOptions} /> */}
         <SearchFilter
           opened={opened}
           open={open}
@@ -91,6 +118,10 @@ const Index: NextPage = () => {
           setLimit={setLimit}
           additionalFilter={
             <>
+              <Text size="sm" style={{ marginBottom: 10 }}>
+                Fokus
+              </Text>
+              <SegmentedControl fullWidth data={SearchOptions} />
               <Text size="sm" style={{ marginBottom: 10, marginTop: 10 }}>
                 Hasil yang ditampilkan
               </Text>
@@ -106,15 +137,12 @@ const Index: NextPage = () => {
         />
       </Group>
 
-      {isFetching && <SkeletonCustom />}
-      {/* <SkeletonCustom /> */}
-      {isError && (
-        <div style={{ textAlign: "center" }}>
-          Error: Terjadi kesalahan pada server. Silakan coba beberapa saat lagi.
-        </div>
+      {isFetching && (
+        <Skeleton height={100} width="100%" visible style={{ margin: 10 }} />
       )}
+      {isError && <div>Error: {error?.message}</div>}
       {/* Tampilkan data yang diterima dari server */}
-      {!isFetching && data && Array.isArray(data) && (
+      {data && Array.isArray(data) && (
         <div>
           {data?.map((item: any, index: number) => (
             <Content
@@ -127,8 +155,9 @@ const Index: NextPage = () => {
           ))}
         </div>
       )}
+      {/* <Content /> */}
     </div>
   );
 };
 
-export default Index;
+export default Repetisi;

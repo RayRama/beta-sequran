@@ -8,9 +8,12 @@ const AppShellComponent = dynamic(
   { ssr: false, loading: () => <Loader variant="dots" /> }
 );
 
-const NavbarAtom = dynamic(
-  () => import("../atoms/NavbarAtom").then((mod) => mod.NavbarAtom),
-  { ssr: false, loading: () => <Loader variant="dots" /> }
+const NavbarCustom = dynamic(
+  () => import("./NavbarCustom").then((mod) => mod.NavbarCustom),
+  {
+    ssr: false,
+    loading: () => <Loader variant="dots" />,
+  }
 );
 
 const Header = dynamic(
@@ -20,11 +23,12 @@ const Header = dynamic(
 
 interface AppShellProps {
   children: React.ReactNode;
+  hiddenNav?: boolean;
 }
 
-export const AppShell = ({ children }: AppShellProps) => {
+export const AppShell = ({ children, hiddenNav }: AppShellProps) => {
   const theme = useMantineTheme();
-  const matches = useMediaQuery("(max-width: 480px)");
+  const matches = useMediaQuery("(max-width: 768px)");
   const [opened, setOpened] = React.useState(false);
 
   return (
@@ -39,9 +43,12 @@ export const AppShell = ({ children }: AppShellProps) => {
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
-      navbar={<NavbarAtom opened={opened} setOpened={setOpened} />}
+      {...(!hiddenNav && {
+        navbar: <NavbarCustom opened={opened} setOpened={setOpened} />,
+      })}
       {...(matches && {
         header: <Header opened={opened} setOpened={setOpened} theme={theme} />,
+        navbar: <NavbarCustom opened={opened} setOpened={setOpened} />,
       })}
     >
       {children}

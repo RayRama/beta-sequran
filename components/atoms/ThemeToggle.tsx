@@ -22,7 +22,18 @@ export const ThemeToggle = () => {
             label: (
               <Center>
                 <GoSun size="1rem" stroke="1.5" />
-                {/* <Box ml={10}>Light</Box> */}
+                <Box
+                  ml={10}
+                  sx={() => {
+                    return {
+                      "@media (min-width: 480px)": {
+                        display: "none",
+                      },
+                    };
+                  }}
+                >
+                  Light
+                </Box>
               </Center>
             ),
           },
@@ -31,7 +42,18 @@ export const ThemeToggle = () => {
             label: (
               <Center>
                 <GoMoon size="1rem" stroke="1.5" />
-                {/* <Box ml={10}>Dark</Box> */}
+                <Box
+                  ml={10}
+                  sx={() => {
+                    return {
+                      "@media (min-width: 480px)": {
+                        display: "none",
+                      },
+                    };
+                  }}
+                >
+                  Dark
+                </Box>
               </Center>
             ),
           },
