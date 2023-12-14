@@ -24,7 +24,8 @@ const SegmentedControl = dynamic(
 );
 
 const SearchBar = dynamic(
-  () => import("@/components/molecules/SearchBar").then((mod) => mod.SearchBar),
+  () =>
+    import("../../components/molecules/SearchBar").then((mod) => mod.SearchBar),
   { ssr: false, loading: () => <Loader variant="dots" /> }
 );
 
