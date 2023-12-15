@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { SkeletonCustom } from "@/components/atoms/SkeletonCustom";
 import { Content } from "@/components/molecules/Content";
-import { SearchBar } from "@/components/molecules/SearchBar";
+import { Searchbar } from "@/components/molecules/Searchbar";
 import { SearchFilter } from "@/components/molecules/SearchFilter";
 import { useAISearch } from "@/helper/hooks/useAISearch";
 import { css } from "@emotion/react";
@@ -72,7 +72,7 @@ const Index: NextPage = () => {
           flexDirection: "row",
         }}
       >
-        <SearchBar
+        <Searchbar
           css={css`
             width: 35%;
             @media (max-width: 768px) {

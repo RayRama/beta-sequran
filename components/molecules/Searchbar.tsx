@@ -9,7 +9,7 @@ import React from "react";
 import { BiSearch } from "react-icons/bi";
 import { BsArrowRight } from "react-icons/bs";
 
-export function SearchBar(
+export function Searchbar(
   props: TextInputProps & {
     setter: React.Dispatch<React.SetStateAction<boolean>>;
     placeHolder?: string;
