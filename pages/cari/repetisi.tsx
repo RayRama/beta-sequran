@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { SearchOptions } from "@/components/atoms/SearchOptions";
 import { Content } from "@/components/molecules/Content";
-import { Searchbar } from "@/components/molecules/Searchbar";
+// import { Searchbar } from "@/components/molecules/Searchbar";
 import { SearchFilter } from "@/components/molecules/SearchFilter";
 import { css } from "@emotion/react";
 import { Loader, NumberInput, Skeleton, Text } from "@mantine/core";
@@ -22,11 +22,10 @@ const SegmentedControl = dynamic(
   { ssr: false, loading: () => <Loader variant="dots" /> }
 );
 
-// const SearchBar = dynamic(
-//   () =>
-//     import("../../components/molecules/SearchBar").then((mod) => mod.SearchBar),
-//   { ssr: false, loading: () => <Loader variant="dots" /> }
-// );
+const Searchbar = dynamic(
+  () => import("@/components/molecules/Searchbar").then((mod) => mod.Searchbar),
+  { ssr: false, loading: () => <Loader variant="dots" /> }
+);
 
 type SearchData = {
   verse_key: string;
