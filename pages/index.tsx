@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { SkeletonCustom } from "@/components/atoms/SkeletonCustom";
 import { Content } from "@/components/molecules/Content";
+import { SearchBar } from "@/components/molecules/SearchBar";
 import { SearchFilter } from "@/components/molecules/SearchFilter";
 import { useAISearch } from "@/helper/hooks/useAISearch";
 import { css } from "@emotion/react";
@@ -16,10 +17,10 @@ const Group = dynamic(() => import("@mantine/core").then((mod) => mod.Group), {
   loading: () => <Loader variant="dots" />,
 });
 
-const SearchBar = dynamic(
-  () => import("@/components/molecules/SearchBar").then((mod) => mod.SearchBar),
-  { ssr: false, loading: () => <Loader variant="dots" /> }
-);
+// const SearchBar = dynamic(
+//   () => import("@/components/molecules/SearchBar").then((mod) => mod.SearchBar),
+//   { ssr: false, loading: () => <Loader variant="dots" /> }
+// );
 
 const Index: NextPage = () => {
   const [search, setSearch] = React.useState<string>("");
