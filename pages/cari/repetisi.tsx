@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { SearchOptions } from "@/components/atoms/SearchOptions";
 import { Content } from "@/components/molecules/Content";
+import { SearchBar } from "@/components/molecules/SearchBar";
 import { SearchFilter } from "@/components/molecules/SearchFilter";
-// import { Content } from "@/components/molecules/Content";
-import { SearchBar } from "@/components/molecules/Searchbar";
 import { css } from "@emotion/react";
 import { Loader, NumberInput, Skeleton, Text } from "@mantine/core";
 import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
