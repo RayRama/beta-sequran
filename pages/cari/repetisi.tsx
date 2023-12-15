@@ -2,7 +2,7 @@
 import { SearchOptions } from "@/components/atoms/SearchOptions";
 import { Content } from "@/components/molecules/Content";
 // import { Searchbar } from "@/components/molecules/Searchbar";
-import { SearchFilter } from "@/components/molecules/SearchFilter";
+// import { SearchFilter } from "@/components/molecules/SearchFilter";
 import { css } from "@emotion/react";
 import { Loader, NumberInput, Skeleton, Text } from "@mantine/core";
 import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
@@ -24,6 +24,14 @@ const SegmentedControl = dynamic(
 
 const Searchbar = dynamic(
   () => import("@/components/molecules/Searchbar").then((mod) => mod.Searchbar),
+  { ssr: false, loading: () => <Loader variant="dots" /> }
+);
+
+const SearchFilter = dynamic(
+  () =>
+    import("@/components/molecules/SearchFilter").then(
+      (mod) => mod.SearchFilter
+    ),
   { ssr: false, loading: () => <Loader variant="dots" /> }
 );
 

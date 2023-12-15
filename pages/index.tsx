@@ -2,7 +2,7 @@
 import { SkeletonCustom } from "@/components/atoms/SkeletonCustom";
 import { Content } from "@/components/molecules/Content";
 // import { Searchbar } from "@/components/molecules/Searchbar";
-import { SearchFilter } from "@/components/molecules/SearchFilter";
+// import { SearchFilter } from "@/components/molecules/SearchFilter";
 import { useAISearch } from "@/helper/hooks/useAISearch";
 import { css } from "@emotion/react";
 import { Loader, NumberInput, Text } from "@mantine/core";
@@ -19,6 +19,14 @@ const Group = dynamic(() => import("@mantine/core").then((mod) => mod.Group), {
 
 const Searchbar = dynamic(
   () => import("@/components/molecules/Searchbar").then((mod) => mod.Searchbar),
+  { ssr: false, loading: () => <Loader variant="dots" /> }
+);
+
+const SearchFilter = dynamic(
+  () =>
+    import("@/components/molecules/SearchFilter").then(
+      (mod) => mod.SearchFilter
+    ),
   { ssr: false, loading: () => <Loader variant="dots" /> }
 );
 
