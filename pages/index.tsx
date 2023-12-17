@@ -34,11 +34,11 @@ const Index: NextPage = () => {
   const [search, setSearch] = React.useState<string>("");
   const [enabled, setEnabled] = React.useState<boolean>(false);
   const [opened, { open, close }] = useDisclosure(false);
-  const [limit, setLimit] = React.useState<number>(10);
+  const [limit, setLimit] = React.useState<number>(20);
 
   const randomPlaceholder = [
     "Sifat Allah",
-    "Doa nabi musa",
+    "Ayat tentang arah kiblat",
     "Perintah solat",
     "Nama-nama Allah",
     "Ayat tentang puasa",
@@ -74,8 +74,8 @@ const Index: NextPage = () => {
         position="center"
         style={{
           width: "100%",
-          marginTop: "10px",
-          marginBottom: "2rem",
+          marginTop: "1rem",
+          marginBottom: "1rem",
           display: "flex",
           flexDirection: "row",
         }}
@@ -123,15 +123,20 @@ const Index: NextPage = () => {
         </div>
       )}
       {/* Tampilkan data yang diterima dari server */}
-      {!isFetching && data && Array.isArray(data) && (
+      {!isFetching && data && Array.isArray(data.results) && (
         <div>
-          {data?.map((item: any, index: number) => (
+          <Text align="center">
+            Menampilkan {data.results.length} hasil pencarian yang relevan
+            dengan kata kunci
+          </Text>
+          {data?.results.map((item: any, index: number) => (
             <Content
               key={index}
               no={index + 1}
-              verse={item.verse_key}
-              translation={item.document}
+              verse={item.ayat_key}
+              translation={item.terjemah}
               ayat={item.ayat}
+              queryType="ai-search"
             />
           ))}
         </div>

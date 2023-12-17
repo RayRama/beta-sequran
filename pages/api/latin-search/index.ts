@@ -27,7 +27,7 @@ export default async function handler(
 
   // get the results from the client
 
-  await fetch(`${API_URL}/aisearch/search?query=${query}&total=${total}`, {
+  await fetch(`${API_URL}/latin/search?query=${query}&total=${total}`, {
     cache: "force-cache",
   })
     .then((response) => {

@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 
 // type SearchResponse = {
 //   results: {
-//     score: number;
 //     nama_surat: string;
 //     ayat_key: string;
 //     ayat: string;
@@ -15,18 +14,18 @@ import { useQuery } from "@tanstack/react-query";
 //   results: any[];
 // }
 
-export const useAISearch = (
+export const useLatinSearch = (
   query: string,
-  limit: number = 20,
+  limit: number = 10,
   enable: boolean,
   setEnabled: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   return useQuery({
-    queryKey: ["ai-search"],
-    initialData: [],
+    queryKey: ["latin-search"],
+    // initialData: [],
     queryFn: async () => {
       const res = await fetch(
-        `/api/ai-search?query=${query}&total=${limit}`,
+        `/api/latin-search?query=${query}&total=${limit}`,
         // `${process.env.NEXT_PUBLIC_API_URL}/search?query=${query}&total=${limit}`,
         { cache: "force-cache" }
       );

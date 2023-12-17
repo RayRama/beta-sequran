@@ -14,14 +14,21 @@ import { LiaInfoCircleSolid } from "react-icons/lia";
 interface ToolbarMenuProps {
   children: React.ReactNode;
   index: number;
+  queryType: string;
 }
 
-export const ToolbarMenu = ({ children, index }: ToolbarMenuProps) => {
+export const ToolbarMenu = ({
+  children,
+  index,
+  queryType,
+}: ToolbarMenuProps) => {
   const matches = useMediaQuery("(max-width: 480px)");
   const queryClient = useQueryClient();
   let realIndex = index - 1;
 
-  const query: any[] = queryClient.getQueryData(["ai-search"]) || [];
+  const query: { results: any[] } = queryClient.getQueryData([queryType]) || {
+    results: [],
+  };
 
   const showNotification = (err?: any) => {
     notifications.show({
@@ -37,7 +44,7 @@ export const ToolbarMenu = ({ children, index }: ToolbarMenuProps) => {
   const handleCopyAyat = () => {
     navigator.clipboard
       .writeText(
-        `${query[realIndex]?.verse_key}\n\n${query[realIndex]?.ayat}\n\nSumber: Sequran`
+        `${query?.results[realIndex]?.ayat_key}\n\n${query?.results[realIndex]?.ayat}\n\nSumber: Sequran`
       )
       .then(() => showNotification())
       .catch((err) => {
@@ -48,7 +55,7 @@ export const ToolbarMenu = ({ children, index }: ToolbarMenuProps) => {
   const handleCopySemua = () => {
     navigator.clipboard
       .writeText(
-        `${query[realIndex]?.verse_key}\n\n${query[realIndex]?.ayat}\n\n${query[realIndex]?.document}\n\nSumber: Sequran`
+        `${query?.results[realIndex]?.ayat_key}\n\n${query?.results[realIndex]?.ayat}\n\n${query?.results[realIndex]?.document}\n\nSumber: Sequran`
       )
       .then(() => showNotification())
       .catch((err) => {
@@ -57,7 +64,10 @@ export const ToolbarMenu = ({ children, index }: ToolbarMenuProps) => {
   };
 
   const handleViewSurat = () => {
-    window.open(`https://quran.com/${query[realIndex]?.verse_key}`, "_blank");
+    window.open(
+      `https://quran.com/${query?.results[realIndex]?.ayat_key}`,
+      "_blank"
+    );
   };
 
   return (

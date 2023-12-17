@@ -25,19 +25,19 @@ export const SearchOptions = [
         <Box>Arab</Box>
       </Center>
     ),
-    value: "arab",
+    value: "ayat",
   },
-  {
-    label: (
-      <Center>
-        <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
-          <FaBookQuran size="1rem" stroke="1.5" style={{ marginRight: 10 }} />
-        </MediaQuery>
-        <Box>Tnp. Harakat</Box>
-      </Center>
-    ),
-    value: "tanpa-harakat",
-  },
+  // {
+  //   label: (
+  //     <Center>
+  //       <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
+  //         <FaBookQuran size="1rem" stroke="1.5" style={{ marginRight: 10 }} />
+  //       </MediaQuery>
+  //       <Box>Tnp. Harakat</Box>
+  //     </Center>
+  //   ),
+  //   value: "tanpa-harakat",
+  // },
   {
     label: (
       <Center>
@@ -47,6 +47,6 @@ export const SearchOptions = [
         <Box>Latin</Box>
       </Center>
     ),
-    value: "transliterasi",
+    value: "latin",
   },
 ];

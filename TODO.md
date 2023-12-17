@@ -1,4 +1,6 @@
-- [ ] Setting up environment variable
+- [ ] Setting up environment variable for production
+- [ ] Ubah warna dark and light mode
+- [ ] Harus konsisten antara menggunakan `type` atau `interface`
 
 - [ ] Query pada searchbar tidak boleh kosong (Gunakan validasi form dari mantine)
 - [x] Sembunyikan API backend dari client menggunakan API Route dari Next.js (optional)

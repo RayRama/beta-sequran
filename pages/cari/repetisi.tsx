@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { SearchOptions } from "@/components/atoms/SearchOptions";
+import { SkeletonCustom } from "@/components/atoms/SkeletonCustom";
 import { Content } from "@/components/molecules/Content";
+import { useRepetitionSearch } from "@/helper/hooks/useRepetitionSearch";
 // import { Searchbar } from "@/components/molecules/Searchbar";
 // import { SearchFilter } from "@/components/molecules/SearchFilter";
 import { css } from "@emotion/react";
@@ -46,32 +48,21 @@ const Repetisi: NextPage = () => {
   const [enabled, setEnabled] = React.useState<boolean>(false);
   const [opened, { open, close }] = useDisclosure(false);
   const [limit, setLimit] = React.useState<number>(10);
+  const [focused, setFocused] = React.useState<string>("terjemah");
 
   const randomPlaceholder = ["Iman", "Takwa", "Allah", "Muhammad", "Puasa"];
 
-  async function searchData(searchTerm: string): Promise<SearchData> {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/search?query=${searchTerm}&total=${limit}`,
-      {
-        cache: "force-cache",
-      }
-    );
-    const data = await res.json();
-    setEnabled(false);
-    return data.results;
-  }
+  const { data, isError, isFetching } = useRepetitionSearch(
+    focused,
+    search,
+    limit,
+    enabled,
+    setEnabled
+  );
 
-  // const debouncedSearchTerm = useDebounce(search, 1000);
-
-  const { data, isError, error, isFetching } = useQuery<
-    SearchData, // Menggunakan tipe SearchData sebagai tipe generic
-    Error
-  >({
-    queryKey: ["search", useDebouncedValue(search, 200)] as const, // Menyesuaikan tipe argumen queryKey
-    queryFn: () => searchData(search),
-    enabled: enabled,
-    gcTime: 1000 * 60 * 60 * 24,
-  });
+  React.useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <div
@@ -92,8 +83,8 @@ const Repetisi: NextPage = () => {
         position="center"
         style={{
           width: "100%",
-          marginTop: "10px",
-          marginBottom: "2rem",
+          marginTop: "1rem",
+          marginBottom: "1rem",
           display: "flex",
           flexDirection: "row",
         }}
@@ -106,7 +97,7 @@ const Repetisi: NextPage = () => {
             }
           `}
           defaultValue={search}
-          placeHolder={randomPlaceholder[Math.floor(Math.random() * 5)]}
+          placeholder={randomPlaceholder[Math.floor(Math.random() * 5)]}
           onChange={(e) => setSearch(e.currentTarget.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -128,7 +119,12 @@ const Repetisi: NextPage = () => {
               <Text size="sm" style={{ marginBottom: 10 }}>
                 Fokus
               </Text>
-              <SegmentedControl fullWidth data={SearchOptions} />
+              <SegmentedControl
+                fullWidth
+                data={SearchOptions}
+                value={focused}
+                onChange={setFocused}
+              />
               <Text size="sm" style={{ marginBottom: 10, marginTop: 10 }}>
                 Hasil yang ditampilkan
               </Text>
@@ -144,20 +140,33 @@ const Repetisi: NextPage = () => {
         />
       </Group>
 
-      {isFetching && (
-        <Skeleton height={100} width="100%" visible style={{ margin: 10 }} />
+      {isFetching && <SkeletonCustom />}
+      {/* <SkeletonCustom /> */}
+      {isError && (
+        <div style={{ textAlign: "center" }}>
+          Error: Terjadi kesalahan pada server. Silakan coba beberapa saat lagi.
+        </div>
       )}
-      {isError && <div>Error: {error?.message}</div>}
       {/* Tampilkan data yang diterima dari server */}
-      {data && Array.isArray(data) && (
+      {!isFetching && data && Array.isArray(data.results) && (
         <div>
-          {data?.map((item: any, index: number) => (
+          <Text align="center">
+            Menampilkan {data.results.length} hasil pencarian yang relevan
+            dengan kata kunci
+          </Text>
+          <Text align="center" fw={500}>
+            Fokus: {focused} | Total Ayat: {data.total_ayat} | Total Repetisi:{" "}
+            {data.total_repetitions}
+          </Text>
+
+          {data?.results.map((item: any, index: number) => (
             <Content
               key={index}
               no={index + 1}
-              verse={item.verse_key}
-              translation={item.document}
+              verse={item.ayat_key}
+              translation={item.terjemah}
               ayat={item.ayat}
+              queryType="repetition-search"
             />
           ))}
         </div>

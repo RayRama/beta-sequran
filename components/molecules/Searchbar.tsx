@@ -12,7 +12,7 @@ import { BsArrowRight } from "react-icons/bs";
 export function Searchbar(
   props: TextInputProps & {
     setter: React.Dispatch<React.SetStateAction<boolean>>;
-    placeHolder?: string;
+    placeholder?: string;
   }
 ) {
   const theme = useMantineTheme();
@@ -40,8 +40,8 @@ export function Searchbar(
   };
 
   React.useEffect(() => {
-    if (inputRef.current?.value.length == 30) {
-      return notificationError("Kata kunci tidak boleh lebih dari 30 huruf");
+    if (inputRef.current?.value.length > 100) {
+      return notificationError("Kata kunci tidak boleh lebih dari 100 huruf");
     }
 
     return () => {};
@@ -57,7 +57,7 @@ export function Searchbar(
       radius="sm"
       size="md"
       minLength={3}
-      maxLength={30}
+      maxLength={100}
       rightSection={
         <ActionIcon
           size={32}
@@ -76,7 +76,7 @@ export function Searchbar(
           submitInput();
         }
       }}
-      placeholder={props.placeHolder}
+      placeholder={props.placeholder}
       rightSectionWidth={42}
       {...props}
     />

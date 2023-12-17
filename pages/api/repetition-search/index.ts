@@ -8,8 +8,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
   // get the query from the request
-  const { query, total } = req.query;
+  const { focus, query, total } = req.query;
   let results: any[] = [];
+  const focusOn: any[] = ["terjemah", "ayat", "latin"];
 
   if (!query) {
     return res.status(400).json({ error: "No query provided" });
@@ -17,6 +18,12 @@ export default async function handler(
 
   if (!total) {
     return res.status(400).json({ error: "No total provided" });
+  }
+
+  if (!focus) {
+    return res.status(400).json({ error: "No focus provided" });
+  } else if (!focusOn.includes(focus)) {
+    return res.status(400).json({ error: "Invalid focus provided" });
   }
 
   if (query.length <= 3) {
@@ -27,9 +34,12 @@ export default async function handler(
 
   // get the results from the client
 
-  await fetch(`${API_URL}/aisearch/search?query=${query}&total=${total}`, {
-    cache: "force-cache",
-  })
+  await fetch(
+    `${API_URL}/repetisi/search?focus=${focus}&query=${query}&total=${total}`,
+    {
+      cache: "force-cache",
+    }
+  )
     .then((response) => {
       return response.json();
     })

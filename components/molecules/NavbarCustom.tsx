@@ -38,7 +38,8 @@ export const NavbarCustom = ({
           width={180}
           height={80}
           alt="Logo"
-          loading="lazy"
+          // loading="lazy"
+          priority
         />
         <Group className={classes.header} position="apart">
           <Code sx={{ fontWeight: 700 }}>v3.1.4</Code>

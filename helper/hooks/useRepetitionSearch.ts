@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 
 // type SearchResponse = {
+//   total_repetitions: number;
+//   total_ayat: number | string | undefined;
 //   results: {
-//     score: number;
+//     repetitions: number;
 //     nama_surat: string;
 //     ayat_key: string;
 //     ayat: string;
@@ -12,21 +14,24 @@ import { useQuery } from "@tanstack/react-query";
 // };
 
 // interface SearchResponse {
+//   total_repetitions: number;
+//   total_ayat: number | string | undefined;
 //   results: any[];
 // }
 
-export const useAISearch = (
+export const useRepetitionSearch = (
+  focusOn: string = "terjemah",
   query: string,
-  limit: number = 20,
+  limit: number = 10,
   enable: boolean,
   setEnabled: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   return useQuery({
-    queryKey: ["ai-search"],
+    queryKey: ["repetition-search"],
     initialData: [],
     queryFn: async () => {
       const res = await fetch(
-        `/api/ai-search?query=${query}&total=${limit}`,
+        `/api/repetition-search?focus=${focusOn}&query=${query}&total=${limit}`,
         // `${process.env.NEXT_PUBLIC_API_URL}/search?query=${query}&total=${limit}`,
         { cache: "force-cache" }
       );

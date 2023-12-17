@@ -8,6 +8,8 @@ interface ContentProps {
   verse?: string;
   ayat?: string;
   translation?: string;
+  latin?: string;
+  queryType?: string;
 }
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -66,13 +68,20 @@ const QuranContent = styled.div`
     font-size: ${rem(16)};
     width: 100%;
   }
+
+  .latin-text {
+    font-size: ${rem(14)};
+    width: 100%;
+  }
 `;
 
 export const Content = ({
   no = 0,
   verse = "1:1",
   ayat = "ayat",
-  translation = "Terjemah",
+  translation = "terjemah",
+  latin = "latin",
+  queryType = "ai-search",
 }: ContentProps) => {
   const { classes } = useStyles();
   return (
@@ -81,7 +90,7 @@ export const Content = ({
         <div className={classes.toolbar}>
           <Text size="md">{`No: ${no}`}</Text>
           <Text size="md">{verse}</Text>
-          <ToolbarMenu index={no}>
+          <ToolbarMenu index={no} queryType={queryType}>
             <Tooltip label="More" position="bottom" withArrow arrowSize={6}>
               <ActionIcon
                 variant="filled"
@@ -98,6 +107,16 @@ export const Content = ({
           <Text dir="rtl" className="quran-text" align="justify">
             {ayat}
           </Text>
+          {latin !== "latin" && (
+            <Text
+              fs={"italic"}
+              dir="rtl"
+              className="latin-text"
+              align="justify"
+            >
+              {latin}
+            </Text>
+          )}
           <Text className="translation-text" align="justify">
             {translation}
           </Text>
