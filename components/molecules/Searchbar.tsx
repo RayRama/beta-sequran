@@ -5,6 +5,8 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 import React from "react";
 import { BiSearch } from "react-icons/bi";
 import { BsArrowRight } from "react-icons/bs";
@@ -15,6 +17,14 @@ export function Searchbar(
     placeholder?: string;
   }
 ) {
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query");
+  const total = searchParams.get("total");
+  const focusOn = searchParams.get("focusOn");
+
+  const { push } = useRouter();
+  const { pathname } = usePathname();
+
   const theme = useMantineTheme();
   const inputRef = React.useRef<HTMLInputElement>(
     null
@@ -32,11 +42,19 @@ export function Searchbar(
   };
 
   const submitInput = () => {
+    const params = new URLSearchParams();
+
     if (inputRef.current?.value.length <= 3) {
       return notificationError("Kata kunci harus lebih dari 3 huruf");
     }
     props.setter((prev) => !prev);
     inputRef.current?.blur();
+    params.set("query", inputRef.current?.value);
+
+    push({
+      pathname,
+      query: params.toString(),
+    });
   };
 
   React.useEffect(() => {
@@ -46,6 +64,14 @@ export function Searchbar(
 
     return () => {};
   }, [inputRef.current?.value.length]);
+
+  React.useEffect(() => {
+    if (query) {
+      inputRef.current!.value = query;
+    }
+
+    return () => {};
+  }, [query]);
 
   return (
     <TextInput

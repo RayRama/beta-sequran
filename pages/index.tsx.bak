@@ -3,15 +3,13 @@ import { SkeletonCustom } from "@/components/atoms/SkeletonCustom";
 import { Content } from "@/components/molecules/Content";
 // import { Searchbar } from "@/components/molecules/Searchbar";
 // import { SearchFilter } from "@/components/molecules/SearchFilter";
-import { useLatinSearch } from "@/helper/hooks/useLatinSearch";
+import { useAISearch } from "@/helper/hooks/useAISearch";
 import { css } from "@emotion/react";
 import { Loader, NumberInput, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
 import React from "react";
 
 const Group = dynamic(() => import("@mantine/core").then((mod) => mod.Group), {
@@ -32,45 +30,30 @@ const SearchFilter = dynamic(
   { ssr: false, loading: () => <Loader variant="dots" /> }
 );
 
-const Latin: NextPage = () => {
+const Index: NextPage = () => {
   const [search, setSearch] = React.useState<string>("");
   const [enabled, setEnabled] = React.useState<boolean>(false);
   const [opened, { open, close }] = useDisclosure(false);
   const [limit, setLimit] = React.useState<number>(20);
 
   const randomPlaceholder = [
-    "Lil muttaqin",
-    "Masna wa sulasa wa ruba",
-    "Ihdinas siratal mustaqim",
-    "Alyaumma akmaltu lakum dinakum",
-    "Ya ayyuhal ladzina amanu",
+    "Sifat Allah",
+    "Ayat tentang arah kiblat",
+    "Perintah solat",
+    "Nama-nama Allah",
+    "Ayat tentang puasa",
   ];
 
-  const searchParams = useSearchParams();
-  const query = searchParams.get("query");
-  const total = searchParams.get("total");
+  // const searchParams = useSearchParams();
+  // const query = searchParams.get("query");
+  // const total = searchParams.get("total");
 
-  const { data, isError, isFetching } = useLatinSearch(
+  const { data, isError, isFetching } = useAISearch(
     search,
-    total,
+    limit,
     enabled,
     setEnabled
   );
-  // const { data, isError, isFetching } = useLatinSearch(
-  //   search,
-  //   limit,
-  //   enabled,
-  //   setEnabled
-  // );
-
-  React.useEffect(() => {
-    if (query) {
-      setSearch(query);
-      setEnabled(true);
-    }
-
-    return () => {};
-  }, [query]);
 
   return (
     <div
@@ -106,7 +89,6 @@ const Latin: NextPage = () => {
           `}
           defaultValue={search}
           placeholder={randomPlaceholder[Math.floor(Math.random() * 5)]}
-          // onChange={(e) => handleSubmit(e.currentTarget.value)}
           onChange={(e) => setSearch(e.currentTarget.value)}
           setter={setEnabled}
         />
@@ -153,9 +135,8 @@ const Latin: NextPage = () => {
               no={index + 1}
               verse={item.ayat_key}
               translation={item.terjemah}
-              latin={item.latin}
               ayat={item.ayat}
-              queryType="latin-search"
+              queryType="ai-search"
             />
           ))}
         </div>
@@ -164,4 +145,4 @@ const Latin: NextPage = () => {
   );
 };
 
-export default Latin;
+export default Index;
